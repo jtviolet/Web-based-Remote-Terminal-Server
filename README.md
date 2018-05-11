@@ -4,9 +4,6 @@ The Aperture server started as an open-source, generic, web-based terminal serve
 # Prerequisits
 You will need to have Redis running on your server for this server to work. If you are on a Unix server, you can download redis [here](https://redis.io/download). If you are on Windows then you can download redis [here](https://github.com/MicrosoftArchive/redis/releases). By default, the application will be looking for redis on port 6379.
 
-# Configuration
-All configuration for the server is stored in `/lib/config.json`. Currently the only config item you could/should change is the port.
-
 # Installation
 This application should be able to run on any Windows or Unix machine. Make sure redis is installed and then follow these steps:
 ```
@@ -14,6 +11,9 @@ git clone https://github.com/jtviolet/aperture-server.git
 cd aperture-server
 npm start
 ```
+
+# Configuration
+All configuration for the server is stored in `/lib/config.json`. Currently the only config item you could/should change is the port.
 
 # Usage
 You will need to have the [aperture-edge-client](https://github.com/jtviolet/aperture-edge-client) running on the devices you want to connect to. This server will also sit and wait for users to connect via a web interface, which I'll be sharing an example in [jtviolet/aperture-client-web](https://github.com/jtviolet/aperture-client-web) soon.
