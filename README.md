@@ -24,6 +24,7 @@ You will need to have the [aperture-edge-client](https://github.com/jtviolet/ape
 # Upcomming Features / TODO
 Please submit pull requests if you'd like to work on any of these features:
   * API Documentation for creating your own front-end
+  * Finish Redis implementation for scaling horizontally
   * Ability to group devices and users by namespace in socket.io
   * Ability for users to set pretty names for devices
   * Finish tests preceeded with a period in the test folder
