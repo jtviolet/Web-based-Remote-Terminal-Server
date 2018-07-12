@@ -1,5 +1,5 @@
 # Description
-The Aperture server started as an open-source, generic, web-based terminal server that I built while at General Electric. It is a websocket-based implementation that allows a linux or windows device to share its terminal with a web interface for easy access of the device, remotely. The server implements socket.io on the backend as a to share communication between your frontend and the device you want to connect to.
+The Aperture server is a web-based terminal server that allows a linux or windows device to share its terminal with a web interface for easy access of the device, remotely. The server implements socket.io on the backend to share communication between your frontend and the device you want to connect to. Note that this is just the server to host the connections of the users and the devices. You will still need to install the [Aperture Client](https://github.com/jtviolet/aperture-edge-client) on the device you want to control, and you will either need to use the [Aperture Demo Interface](https://github.com/jtviolet/aperture-web-client), or build your own.
 
 ![Aperture Overview](https://i.imgur.com/BAOb6DX.png)
 
