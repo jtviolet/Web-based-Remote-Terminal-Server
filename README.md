@@ -1,5 +1,6 @@
 # Description
 The Aperture server started as an open-source, generic, web-based terminal server that I built while at General Electric. It is a websocket-based implementation that allows a linux or windows device to share its terminal with a web interface for easy access of the device, remotely. The server implements socket.io on the backend as a to share communication between your frontend and the device you want to connect to.
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
 # Prerequisits
 You will need to have Redis running on your server for this server to work. If you are on a Unix server, you can download redis [here](https://redis.io/download). If you are on Windows then you can download redis [here](https://github.com/MicrosoftArchive/redis/releases). By default, the application will be looking for redis on port 6379.
