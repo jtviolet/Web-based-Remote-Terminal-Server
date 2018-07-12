@@ -1,0 +1,7 @@
+{
+    "name": "Aperture Sample",
+    "description": "A barebones Aperture server example with no security.",
+    "repository": "https://github.com/jtviolet/aperture-server",
+    "keywords": ["node", "express", "socket.io", "aperture", "terminal"],
+    "addons": ["heroku-redis:hobby-dev", "features:enable http-session-affinity"]
+}
