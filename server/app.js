@@ -2,8 +2,7 @@
 const express = require('express');
 const moment = require('moment');
 const redis = require('socket.io-redis');
-const Redis = require('ioredis');
-var ioredis = new Redis(process.env.REDIS_URL || "localhost");
+const ioredis = require('ioredis');
 const config = require('../config/config.json');
 const aperture = require('../lib/aperture.js');
 const serverSubOptions = config.serverSubOptions;
@@ -79,7 +78,7 @@ require('socketio-auth')(io, {
 });
 
 // Connect to redis to share events between multiple instances in different processes or servers
-io.adapter(redis({pubClient: ioredis, subClient: ioredis}));
+io.adapter(redis({pubClient: ioredis(process.env.REDIS_URL), subClient: ioredis(process.env.HEROKU_REDIS_ORANGE_URL)}));
 
 // Ask every node for the room's device information
 io.of('/').adapter.customHook = (room, callback) => {
