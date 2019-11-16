@@ -79,7 +79,7 @@ require('socketio-auth')(io, {
 });
 
 // Connect to redis to share events between multiple instances in different processes or servers
-io.adapter(redis({host: HOST, pubClient: ioredis(), subClient: ioredis()}));
+io.adapter(redis({host: REDIS_HOST, pubClient: ioredis(), subClient: ioredis()}));
 
 // Ask every node for the room's device information
 io.of('/').adapter.customHook = (room, callback) => {
