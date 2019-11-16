@@ -2,7 +2,8 @@
 const express = require('express');
 const moment = require('moment');
 const redis = require('socket.io-redis');
-const ioredis = require('ioredis');
+const Redis = require('ioredis');
+var ioredis = new Redis({host: process.env.REDIS_URL || "localhost"});
 const config = require('../config/config.json');
 const aperture = require('../lib/aperture.js');
 const serverSubOptions = config.serverSubOptions;
@@ -10,8 +11,6 @@ const serverPubOptions = config.serverPubOptions;
 const clientIdentifier = config.clientIdentifier;
 const timestampFormat = config.logTimestampFormat;
 const PORT = process.env.PORT || config.port;
-const REDIS_URL = process.env.REDIS_URL || "localhost";
-console.log("Redis Host: " + REDIS_URL);
 
 // Authenticate user before allowing them access to the Aperture features.
 // This can just be left alone if you don't want to use any authentication.
@@ -80,7 +79,7 @@ require('socketio-auth')(io, {
 });
 
 // Connect to redis to share events between multiple instances in different processes or servers
-io.adapter(redis({host: process.env.REDIS_URL, pubClient: ioredis(), subClient: ioredis()}));
+io.adapter(redis({pubClient: ioredis, subClient: ioredis}));
 
 // Ask every node for the room's device information
 io.of('/').adapter.customHook = (room, callback) => {
