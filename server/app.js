@@ -64,7 +64,7 @@ const postAuthenticate = function (client, authData) {
 
 // Start server and listen on designated port
 const app = express();
-const server = app.listen(config.port, function () {
+const server = app.listen(process.env.PORT || config.port, function () {
     console.log(`${moment().format(timestampFormat)}: Server started on port ${server.address().port}`);
 });
 
