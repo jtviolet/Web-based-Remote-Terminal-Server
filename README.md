@@ -17,9 +17,6 @@ cd aperture-server
 npm start
 ```
 
-# Configuration
-All configuration for the server is stored in `/lib/config.json`. Currently the only config item you could/should change is the port.
-
 # Usage
 You will need to have the [aperture-edge-client](https://github.com/jtviolet/aperture-edge-client) running on the devices you want to connect to. This server will also sit and wait for users to connect via a web interface, which I'll be sharing an example in [jtviolet/aperture-client-web](https://github.com/jtviolet/aperture-client-web) soon.
 

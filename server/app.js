@@ -3,13 +3,11 @@ const express = require('express');
 const moment = require('moment');
 const redis = require('socket.io-redis');
 const ioredis = require('ioredis');
-const config = require('../config/config.json');
+const pubioredis = ioredis(process.env.IO_REDIS_PUB || "redis://:@127.0.0.1:6379/4");
+const subioredis = ioredis(process.env.IO_REDIS_SUB || "redis://:@127.0.0.1:6379/4");
 const aperture = require('../lib/aperture.js');
-const serverSubOptions = config.serverSubOptions;
-const serverPubOptions = config.serverPubOptions;
-const clientIdentifier = config.clientIdentifier;
-const timestampFormat = config.logTimestampFormat;
-const PORT = process.env.PORT || config.port;
+const timestampFormat = "YYYY-MM-DD HH:mm:ss";
+const PORT = process.env.PORT || 5001;
 
 // Authenticate user before allowing them access to the Aperture features.
 // This can just be left alone if you don't want to use any authentication.
@@ -31,34 +29,34 @@ const authenticate = function (client, clientInfo, callback) {
 const postAuthenticate = function (client, authData) {
 
     // Join client to a room
-    client.on(serverSubOptions.joinRoom, function (requestedRoom) {
+    client.on("join room", function (requestedRoom) {
         aperture.collectRoomList(io, client).then(function(roomList){
             aperture.clientJoinRoom(io, client, roomList, requestedRoom);
         });
     });
 
     // Remove client from a room
-    client.on(serverSubOptions.leaveRoom, function () {
+    client.on("leave room", function () {
         aperture.clientLeaveRoom(io, client);
     });
 
     // Allow a user to get a list of available rooms to join
-    client.on(serverSubOptions.getRooms, function () {
+    client.on("get rooms", function () {
         aperture.sendRoomList(io, client);
     });
 
     // Allow a client to send terminal data to its respective user/device
-    client.on(serverSubOptions.terminalData, function (data) {
+    client.on("terminal data", function (data) {
         aperture.sendTerminalData(client, data);
     });
 
     // Allow a user to resize their terminal for the device they are connected to
-    client.on(serverSubOptions.resizeTerminal, function (data) {
+    client.on("resize terminal", function (data) {
         aperture.resizeTerminal(client, data);
     });
 
     // Remove user session on device when user disconnects, or kick all clients in device room when device disconnects
-    client.on(serverSubOptions.disconnect, function(){
+    client.on("disconnect", function(){
         aperture.disconnect(io, client);
     });
 };
@@ -78,7 +76,7 @@ require('socketio-auth')(io, {
 });
 
 // Connect to redis to share events between multiple instances in different processes or servers
-io.adapter(redis({pubClient: ioredis(process.env.REDIS_URL), subClient: ioredis(process.env.HEROKU_REDIS_ORANGE_URL)}));
+io.adapter(redis({pubClient: pubioredis, subClient: subioredis}));
 
 // Ask every node for the room's device information
 io.of('/').adapter.customHook = (room, callback) => {
