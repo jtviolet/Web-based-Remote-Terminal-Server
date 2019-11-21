@@ -14,6 +14,7 @@ This application should be able to run on any Windows or Unix machine. Make sure
 ```
 git clone https://github.com/jtviolet/aperture-server.git
 cd aperture-server
+npm install
 npm start
 ```
 
